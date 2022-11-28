@@ -41,10 +41,12 @@ public class Voiture {
 	 * @throws java.lang.Exception si la voiture n'est pas dans un garage
 	 */
 	public void sortDuGarage() throws Exception {
-		throw new UnsupportedOperationException("Pas encore implémenté");
-		// TODO: Implémenter cette méthode
-		// Trouver le dernier stationnement de la voiture
-		// Terminer ce stationnement
+		if(!this.estDansUnGarage()) {
+			throw new UnsupportedOperationException("La voiture n'est pas dans un garage");
+		}
+
+		this.myStationnements.get(this.myStationnements.size() - 1).terminer();
+
 	}
 
 	/**
@@ -59,9 +61,9 @@ public class Voiture {
 	 * @return vrai si la voiture est dans un garage, faux sinon
 	 */
 	public boolean estDansUnGarage() {
-		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
-		// Vrai si le dernier stationnement est en cours
+
+		return this.myStationnements.get(this.myStationnements.size() - 1).estEnCours();
+
 	}
 
 	/**
