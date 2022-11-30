@@ -28,7 +28,9 @@ public class Voiture {
 	 * @throws java.lang.Exception Si déjà dans un garage
 	 */
 	public void entreAuGarage(Garage g) throws Exception {
-		// Et si la voiture est déjà dans un garage ?
+		if(this.estDansUnGarage()) {
+			throw new UnsupportedOperationException("La voiture est déjà dans un garage");
+		}
 
 		Stationnement s = new Stationnement(this, g);
 		myStationnements.add(s);
@@ -53,8 +55,14 @@ public class Voiture {
 	 * @return l'ensemble des garages visités par cette voiture
 	 */
 	public Set<Garage> garagesVisites() {
-		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+
+		Set <Garage> garages = new HashSet<>();
+		for(Stationnement s : this.myStationnements) {
+			garages.add(s.getGarage());
+		}
+
+		return garages;
+
 	}
 
 	/**
@@ -62,6 +70,7 @@ public class Voiture {
 	 */
 	public boolean estDansUnGarage() {
 
+		if(this.myStationnements.isEmpty()) { return false; }
 		return this.myStationnements.get(this.myStationnements.size() - 1).estEnCours();
 
 	}
@@ -83,8 +92,18 @@ public class Voiture {
 	 * @param out l'endroit où imprimer (ex: System.out)
 	 */
 	public void imprimeStationnements(PrintStream out) {
-		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+
+		String impression = "";
+		for(Garage g : this.garagesVisites()) {
+			impression += "\n" + g.toString();
+			for(Stationnement s : this.myStationnements) {
+				if (s.getGarage() == g) {
+					impression += "\n	" + s.toString();
+				}
+			}
+		}
+
+		out.println(impression);
 	}
 
 }
